@@ -20,12 +20,11 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: 3. Configurar Android SDK
-        uses: subosito/android-action@v2
-        with:
-          target-sdk: 34
-          build-tools: 34.0.0
-          components: platforms;android-34,build-tools;34.0.0
+      - name: 3. Aceptar licencias y preparar Android SDK
+        run: |
+          export ANDROID_HOME=$ANDROID_SDK_ROOT
+          echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-34" "build-tools;34.0.0"
 
       - name: 4. Dar permisos de ejecución a Gradle
         run: chmod +x gradlew
