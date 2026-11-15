@@ -20,8 +20,9 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: 3. Aceptar licencias y preparar Android SDK
+      - name: 3. Configurar Gradle y Android SDK (Modo Nativo)
         run: |
+          gradle wrapper
           export ANDROID_HOME=$ANDROID_SDK_ROOT
           echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
           $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-34" "build-tools;34.0.0"
