@@ -1,0 +1,2 @@
+-keep class org.osmdroid.** { *; }
+-keepclassmembers class * extends org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase { *; }
