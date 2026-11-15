@@ -20,20 +20,20 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: 3. Configurar Gradle y Android SDK (Modo Nativo)
+      - name: 3. Configurar Gradle 8.4 y Android SDK
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '8.4'
+
+      - name: 4. Aceptar licencias y compilar APK
         run: |
-          gradle wrapper
           export ANDROID_HOME=$ANDROID_SDK_ROOT
           echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
           $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-34" "build-tools;34.0.0"
+          chmod +x gradlew
+          ./gradlew assembleDebug
 
-      - name: 4. Dar permisos de ejecución a Gradle
-        run: chmod +x gradlew
-
-      - name: 5. Compilar APK (Debug)
-        run: ./gradlew assembleDebug
-
-      - name: 6. Guardar archivo APK generado
+      - name: 5. Guardar archivo APK generado
         uses: actions/upload-artifact@v4
         with:
           name: app-multimodal-debug
